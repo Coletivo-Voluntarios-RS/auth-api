@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/bonanza
+
+keycloak:
+  url: http://localhost:8090
+  realm: bonanza
+  client-id: client-id
+  client-secret: secret
+
+springdoc:
+  use-fqn: true
+  default-produces-media-type: application/json
+
+api:
+  name: API
+  version: localhost
+  description: Auth API
