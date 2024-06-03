@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ong.bonanza.auth.application.usecase.CadastrarContaUC;
@@ -22,8 +23,6 @@ public class AuthController {
 
     private final LogarUC logarUC;
 
-    // @Operation(summary = "Cadastrar pessoa na Base de Dados", security =
-    // @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("register")
     public ResponseEntity<Void> registrarUsuario(@RequestBody @Valid CadastrarContaUC.NovaContaDTO novaConta) {
         cadastrarContaUC.executar(novaConta);
@@ -33,7 +32,8 @@ public class AuthController {
     @PostMapping(path = "/login", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
     public ResponseEntity<LogarUC.TokenDTO> login(
             @ModelAttribute("email") String email,
-            @ModelAttribute("password") String password) {
+            @Schema(format = "password") @ModelAttribute("password") String password) {
         return ResponseEntity.ok(logarUC.executar(email, password));
     }
+
 }
